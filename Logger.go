@@ -9,7 +9,6 @@ import (
 	"log"
 	"time"
 	"path/filepath"
-
 )
 
 func main() {
@@ -67,15 +66,15 @@ func getArgs() (identifier string, platform string, text string) {
 }
 
 func writeLog(identifier string, platform string, text string) {
-	folderPath := filepath.Join(identifier, platform)
+	folderPath := filepath.Join("./logs", identifier, platform)
 	err := os.MkdirAll(folderPath, 0755)
 	if err != nil {
 		log.Println("Error creating directory")
 		log.Println(err)
 
 	}
-	filePath := filepath.Join(identifier, platform, time.Now().Format("2006.01.02"))
-	file, err := os.OpenFile(filePath + ".log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0644)
+	filePath := filepath.Join("./logs", identifier, platform, time.Now().Format("2006.01.02"))
+	file, err := os.OpenFile(filePath + ".logs", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0644)
 
 	if err != nil {
 		log.Fatal(err)
@@ -83,20 +82,17 @@ func writeLog(identifier string, platform string, text string) {
 
 	writer := bufio.NewWriter(file)
 
-
-	fmt.Fprintln(writer,"\n" + "Identifier is:" + identifier + ". Platform  is:" + platform + ". Text is: " + text + ". Time and date is:" + time.Now().Format("2006.01.02.15:04:05"))
+	fmt.Fprintln(writer, "\n" + "Identifier is:" + identifier + ". Platform  is:" + platform + ". Text is: " + text + ". Time and date is:" + time.Now().Format("2006.01.02.15:04:05"))
 	writer.Flush()
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
-
 	}
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 
 	}
 	defer file.Close()
-
 
 }

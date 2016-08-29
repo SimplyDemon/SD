@@ -2,20 +2,11 @@ package main
 
 import (
 	"testing"
-
 	"path/filepath"
 	"time"
 	"os"
-	//	"bufio"
-	//	"fmt"
-	//"log"
-
-
 	"bufio"
-	//	"fmt"
-	//	"log"
 	"io"
-
 	"fmt"
 )
 
@@ -89,7 +80,7 @@ func TestWriteLog(t *testing.T) {
 	}
 
 	writeLog(identifier, platform, text)       // вызывает функцию writeLog с указаными аргументами
-	filePath := filepath.Join(identifier, platform, time.Now().Format("2006.01.02"))
+	filePath := filepath.Join("./logs", identifier, platform, time.Now().Format("2006.01.02"))
 	file, err := os.OpenFile(filePath + ".log", os.O_APPEND, 0644)
 
 	if err != nil {
