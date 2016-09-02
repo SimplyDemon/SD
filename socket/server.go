@@ -36,7 +36,7 @@ func listen() {
 		fmt.Println("message is ", message)
 
 
-		if strings.Trim(message, "\n"+"\r") == "HELLO" {
+		if strings.Trim(message, "\r"+"\n") == "HELLO" {
 			c.Write([]byte("WORLD" + "\n"))
 		} else {
 
