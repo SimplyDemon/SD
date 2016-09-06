@@ -5,20 +5,15 @@ import (
 	"fmt"
 )
 
+var identifier, platform, text = "aaccb", "ios", "cedax"
 
-
-
-
-
-var identifier, platform, text ="aaccb", "ios", "cedax"
-type our struct {
+type Request struct {
 	Identifier string     `json:"identifier"`
 	Platform   string       `json:"platform"`
 	Text       string           `json:"text"`
 }
 
-func main () {
-
+func main() {
 
 	encode(identifier, platform, text)
 	theString := encode(identifier, platform, text)
@@ -28,22 +23,20 @@ func main () {
 
 func encode(identifier string, platform string, text string) []byte {
 
-
-	our2 := &our{
+	curRequest := &Request{
 		Identifier:   identifier,
 		Platform:   platform,
 		Text:   text}
 
-	convert, _ := json.Marshal(our2)
-	fmt.Println(string(convert))
-	return convert
+	jsonData, _ := json.Marshal(curRequest)
+	fmt.Println(string(jsonData))
+	return jsonData
 }
 
-func decode(convert []byte) {
+func decode(jsonData []byte) {
 
-
-	res := our{}
-	json.Unmarshal(convert, &res)
+	res := Request{}
+	json.Unmarshal(jsonData, &res)
 	fmt.Println("decode", res)
 
 }
