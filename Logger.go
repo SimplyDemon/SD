@@ -9,16 +9,21 @@ import (
 	"log"
 	"time"
 	"path/filepath"
+	"encoding/json"
+
 )
 
 func main() {
 
 	var identifier, platform, text = getArgs()
 
+
+
+
 	if isValidPlatform(platform) && len(text) > 0 && isValidIdentifier(identifier) {
 		fmt.Println(identifier, platform, text)
 		writeLog(identifier, platform, text)
-
+		encode(identifier, platform,text)
 	} else {
 		printHelp()
 		os.Exit(0)
@@ -44,6 +49,27 @@ func isValidPlatform(platform string) bool {
 	return false
 }
 
+func encode(identifier string, platform string, text string) ([]byte){
+
+	type Response2 struct {
+		identifier string
+		platform string
+		text string
+	}
+	slcD := []string{identifier,platform, text}
+	slcB, _ := json.Marshal(slcD)
+	fmt.Println(string(slcB))
+
+	res := Response2{}
+	slcV := json.Unmarshal([]byte(slcB), &Response2{})
+	fmt.Println(res)
+	fmt.Println(slcV)
+return slcB
+
+}
+
+
+
 func isValidIdentifier(identifier string) bool {
 
 	matched, err := regexp.MatchString("^[A-Fa-f\\d]{5}$", identifier)
@@ -66,7 +92,13 @@ func getArgs() (identifier string, platform string, text string) {
 	return identifier, platform, text
 }
 
+
+
 func writeLog(identifier string, platform string, text string) {
+
+
+
+
 	folderPath := filepath.Join("./logs", identifier, platform)
 	err := os.MkdirAll(folderPath, 0755)
 	if err != nil {
