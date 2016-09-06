@@ -18,6 +18,7 @@ func main() {
 	if isValidPlatform(platform) && len(text) > 0 && isValidIdentifier(identifier) {
 		fmt.Println(identifier, platform, text)
 		writeLog(identifier, platform, text)
+
 	} else {
 		printHelp()
 		os.Exit(0)
