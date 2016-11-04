@@ -35,8 +35,7 @@ func listen() {
 		fmt.Println("Message from:", c.RemoteAddr())
 		fmt.Println("message is ", message)
 
-
-		if strings.Trim(message, "\r"+"\n") == "HELLO" {
+		if strings.Trim(message, "\r" + "\n") == "HELLO" {
 			c.Write([]byte("WORLD" + "\n"))
 		} else {
 
