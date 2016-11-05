@@ -1,3 +1,7 @@
 #ненужная папка
 *.iml
 .idea/
+*.log
+*.logs
+logs/
+json/json/
